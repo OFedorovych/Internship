@@ -45,12 +45,10 @@ describe ("Bird_V2", function () {
     // expect(async function(){
     //   await bird.balanceOf(addr1.address);
     // }).throw(new Error("Recipient is blacklisted"));
-    try{
-      await bird.transfer1(owner.address, addr1.address, 100);
-    }
-    catch(e){
-      expect(1).to.equal(1);
-    }
+    await expectRevert(
+       await bird.transfer1(owner.address, addr1.address, 100),
+       'Recipient is blacklisted'
+     );
 
     await bird.remove_from_blacklist(addr1.address)
     await bird.transfer1(owner.address, addr1.address, 100);
